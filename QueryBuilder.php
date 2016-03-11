@@ -37,11 +37,11 @@ class QueryBuilder {
     }
 
     public function executeQuery($query = null) {
-        if(!is_null($query)) {
-            if(!empty($this->limit)) $query->limit($this->limit);
-            if(!empty($this->sort))  $query->sort($this->sort);
-            if(!empty($this->skip))  $query->skip($this->skip);
-        }
+        if(is_null($query)) $query = $this->query;
+        
+        if(!empty($this->limit)) $query->limit($this->limit);
+        if(!empty($this->sort))  $query->sort($this->sort);
+        if(!empty($this->skip))  $query->skip($this->skip);
 
         return new Collection($query, $this->document);
     }
@@ -84,6 +84,10 @@ class QueryBuilder {
 
         $this->sort = [$field => $order];
         return $this;
+    }
+
+    public function orderBy($field, $order) {
+        return $this->sort($field, $order);
     }
 
     public function skip($skip){
