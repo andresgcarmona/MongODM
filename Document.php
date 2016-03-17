@@ -226,6 +226,10 @@ abstract class Document implements ArrayAccess {
         return static::query()->all($fields);
     }
 
+    public static function lists($value, $key = null) {
+        return static::all()->lists($value, $key);
+    }
+
     public static function find($id, array $fields = []) {
         return new static(static::query()->find($id, $fields));
     }

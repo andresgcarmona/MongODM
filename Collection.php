@@ -102,7 +102,7 @@ class Collection implements Iterator, ArrayAccess {
         return $count;
     }
 
-    public function lists($value, $key = NULL) {
+    public function lists($value, $key = null) {
         return array_pluck($this->toArray(), $value, $key);
     }
 
