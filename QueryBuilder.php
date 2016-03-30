@@ -61,7 +61,13 @@ class QueryBuilder {
 
     public function where($field, $value = null, $boolean = 'and') {
         if($field == $this->getIdField()) $value = new MongoId($value);
+        $this->wheres[$field] = $value;
 
+        return $this;
+    }
+
+    public function orWhere($field, $value) {
+        if($field == $this->getIdField()) $value = new MongoId($value);
         $this->wheres[$field] = $value;
 
         return $this;
