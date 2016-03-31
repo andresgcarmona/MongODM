@@ -156,7 +156,10 @@ abstract class Document implements ArrayAccess {
     }
 
     public function __get($attribute) {
-        return $this->attributes[$attribute];
+        if(isset($this->attributes[$attribute])) return $this->attributes[$attribute];
+        else {
+            if(method_exists($this, $attribute)) return $this->{$attribute}();
+        }
     }
 
     public function __set($attribute, $value) {
