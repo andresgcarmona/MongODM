@@ -44,9 +44,6 @@ abstract class Document implements ArrayAccess {
 
     public function __construct(array $attributes = []) {
        if(is_array($attributes)) {
-            //TODO: Erase this line.
-            //parent::__construct($attributes, ArrayObject::ARRAY_AS_PROPS);
-
             //Fill the attributes.
             $this->fill($attributes);
         }
@@ -55,80 +52,11 @@ abstract class Document implements ArrayAccess {
     public function fill(array $attributes) {
         $totallyGuarded = $this->totallyGuarded();
 
-        foreach($this->fillableFromArray($attributes) as $key => $value) {
+        foreach($attributes as $key => $value) {
             $this->setAttribute($key, $value);
-            /*if($this->isFillable($key) || $this->fillable[0] == '*') {
-                $this->setAttribute($key, $value);
-            }
-            elseif($totallyGuarded) {
-                throw new MassAssignmentException($key);
-            }*/
         }
 
         return $this;
-    }
-
-    /**
-     * Determine if the model is totally guarded.
-     *
-     * @return bool
-     */
-    public function totallyGuarded() {
-        return count($this->fillable) == 0 && $this->guarded == ['*'];
-    }
-
-    /**
-     * Get the fillable attributes of a given array.
-     *
-     * @param  array  $attributes
-     * @return array
-     */
-    protected function fillableFromArray(array $attributes) {
-        return $attributes;
-
-        /*if(count($this->fillable) > 0 && !static::$unguarded) {
-            if(count($this->fillable) == 1 && $this->fillable[0] == '*'){
-                return $attributes;
-            }
-
-            return array_intersect_key($attributes, array_flip($this->fillable));
-        }*/
-
-        return $attributes;
-    }
-
-    /**
-     * Determine if the given attribute may be mass assigned.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function isFillable($key) {
-
-        if(static::$unguarded) return true;
-
-        // If the key is in the "fillable" array, we can of course assume that it's
-        // a fillable attribute. Otherwise, we will check the guarded array when
-        // we need to determine if the attribute is black-listed on the model.
-        if(in_array($key, $this->fillable)) {
-            return true;
-        }
-
-        if($this->isGuarded($key)) {
-            return false;
-        }
-
-        return empty($this->fillable) && !Str::startsWith($key, '_');
-    }
-
-    /**
-     * Determine if the given key is guarded.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function isGuarded($key) {
-        return in_array($key, $this->guarded) || $this->guarded == ['*'];
     }
 
     /**
@@ -139,9 +67,6 @@ abstract class Document implements ArrayAccess {
      * @return void
      */
     public function setAttribute($key, $value) {
-        // First we will check for the presence of a mutator for the set operation
-        // which simply lets the developers tweak the attribute as it is set on
-        // the model, such as "json_encoding" an listing of data for storage.
         if($this->hasSetMutator($key)) {
             $method = 'set' . Str::studly($key) . 'Attribute';
 
