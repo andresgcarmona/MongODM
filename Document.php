@@ -50,8 +50,6 @@ abstract class Document implements ArrayAccess {
     }
 
     public function fill(array $attributes) {
-        $totallyGuarded = $this->totallyGuarded();
-
         foreach($attributes as $key => $value) {
             $this->setAttribute($key, $value);
         }

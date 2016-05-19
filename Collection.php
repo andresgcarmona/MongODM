@@ -1,4 +1,6 @@
-<?php namespace App\Models\Mongo;
+<?php
+
+namespace App\Models\Mongo;
 
 use ArrayAccess;
 use MongoCursor;
