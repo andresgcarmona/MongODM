@@ -11,7 +11,7 @@ class Database{
 
 	public function __construct() {
 		$this->conn = new MongoClient();
-		$this->db = $this->conn->atom; //TODO: Change this
+		$this->db = $this->conn->{env('DB_MONGO')}; //TODO: Change this
 	}
 
 	final private function __clone() {}

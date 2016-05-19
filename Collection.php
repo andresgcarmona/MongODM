@@ -138,4 +138,8 @@ class Collection implements Iterator, ArrayAccess {
     public function rewind() {
         $this->position = 0;
     }
+
+    public function is_empty() {
+        return count($this->items) == 0 ? true : false;
+    }
 }
