@@ -3,7 +3,6 @@
 use ArrayAccess;
 use MongoCursor;
 use Iterator;
-use IteratorAggregate;
 
 class Collection implements Iterator, ArrayAccess {
     private $cursor;
