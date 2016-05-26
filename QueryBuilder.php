@@ -120,7 +120,9 @@ class QueryBuilder {
     public function save() {
         $d = $this->document->toArray();
 
-        $this->update(['_id' => $d['_id']], $d);
+        if(isset($d['_id'])) $this->update(['_id' => $d['_id']], $d);
+        else $this->insert($d);
+
         return true;
     }
 

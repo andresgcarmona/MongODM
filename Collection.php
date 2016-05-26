@@ -23,7 +23,7 @@ class Collection implements Iterator, ArrayAccess {
         $this->fill();
     }
 
-    public function fill(){
+    public function fill() {
         if(!empty($this->cursor)) {
             foreach($this->cursor as $c) {
                 $this->items[] = new $this->document($c);
