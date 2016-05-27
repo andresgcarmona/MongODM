@@ -79,9 +79,15 @@ abstract class Document implements ArrayAccess {
     }
 
     public function __get($attribute) {
-        if(isset($this->attributes[$attribute])) return $this->attributes[$attribute];
+        if($this->hasGetMutator($attribute)) {
+            $method = 'get' . Str::studly($attribute) . 'Attribute';
+            return $this->{$method}();
+        }
         else {
-            if(method_exists($this, $attribute)) return $this->{$attribute}();
+            if(isset($this->attributes[$attribute])) return $this->attributes[$attribute];
+            else {
+                if(method_exists($this, $attribute)) return $this->{$attribute}();
+            }
         }
     }
 
@@ -101,6 +107,10 @@ abstract class Document implements ArrayAccess {
      */
     public function hasSetMutator($key) {
         return method_exists($this, 'set' . Str::studly($key) . 'Attribute');
+    }
+
+    public function hasGetMutator($key) {
+        return method_exists($this, 'get' . Str::studly($key) . 'Attribute');
     }
 
     /**
