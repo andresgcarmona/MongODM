@@ -129,4 +129,8 @@ class QueryBuilder {
     public function delete($conditions, $options = []) {
         return $this->query->remove($conditions, $options);
     }
+
+    public function count() {
+        return $this->get()->count();
+    }
 }
